@@ -1,0 +1,53 @@
+export const CURRENCY = 'BDT'
+
+export const ORDER_FLOW: OrderStatusFlow[] = [
+  'PENDING',
+  'CONFIRMED',
+  'PROCESSING',
+  'PACKED',
+  'SHIPPED',
+  'OUT_FOR_DELIVERY',
+  'DELIVERED',
+]
+
+export type OrderStatusFlow =
+  | 'PENDING'
+  | 'CONFIRMED'
+  | 'PROCESSING'
+  | 'PACKED'
+  | 'SHIPPED'
+  | 'OUT_FOR_DELIVERY'
+  | 'DELIVERED'
+
+export const TRANSITIONS: Record<string, string[]> = {
+  PENDING: ['CONFIRMED', 'CANCELLED'],
+  CONFIRMED: ['PROCESSING', 'CANCELLED'],
+  PROCESSING: ['PACKED', 'CANCELLED'],
+  PACKED: ['SHIPPED'],
+  SHIPPED: ['OUT_FOR_DELIVERY', 'DELIVERED'],
+  OUT_FOR_DELIVERY: ['DELIVERED'],
+  DELIVERED: ['RETURN_REQUESTED'],
+  RETURN_REQUESTED: ['RETURNED'],
+  CANCELLED: [],
+  RETURNED: [],
+}
+
+export const SHIPPING = {
+  standard: { insideDhaka: 6000, outsideDhaka: 12000 },
+  express: { insideDhaka: 13000, outsideDhaka: null },
+  freeThreshold: 500000,
+}
+
+export const ERROR_CODES = {
+  VALIDATION_ERROR: 'VALIDATION_ERROR',
+  UNAUTHORIZED: 'UNAUTHORIZED',
+  FORBIDDEN: 'FORBIDDEN',
+  NOT_FOUND: 'NOT_FOUND',
+  CONFLICT: 'CONFLICT',
+  OUT_OF_STOCK: 'OUT_OF_STOCK',
+  INVALID_TRANSITION: 'INVALID_TRANSITION',
+  PAYMENT_FAILED: 'PAYMENT_FAILED',
+  COUPON_INVALID: 'COUPON_INVALID',
+  RATE_LIMITED: 'RATE_LIMITED',
+  INTERNAL: 'INTERNAL_ERROR',
+} as const
